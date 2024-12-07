@@ -1,0 +1,105 @@
+body {
+            font-family: Arial, sans-serif;
+            background-image: url('health.jpg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: rgb(243, 227, 227);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(11, 11, 11, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        input,
+        select {
+            margin: 10px;
+            padding: 12px;
+            width: 85%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: rgb(42, 42, 84);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: blue;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 25px;
+            color: #fbfaed;
+        }
+
+        .result {
+            font-size: 20px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #181717;
+            color: white;
+        }
+
+        label {
+            font-size: 18px;
+            color: #ffeb3b;
+        }
+
+        .image-container {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 180px;
+            margin: 15px;
+            border-radius: 50%;
+        }
+
+        .meal-plan,
+        .exercise-plan {
+            margin-top: 25px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .meal-plan table,
+        .exercise-plan table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
