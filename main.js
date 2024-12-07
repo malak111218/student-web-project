@@ -1,7 +1,6 @@
 document.getElementById('nutrition-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // جمع المدخلات
     const weight = parseFloat(document.getElementById('weight').value);
     const height = parseFloat(document.getElementById('height').value);
     const age = parseInt(document.getElementById('age').value);
@@ -10,10 +9,8 @@ document.getElementById('nutrition-form').addEventListener('submit', function(e)
     const activityLevel = parseFloat(document.getElementById('activity-level').value);
     const goal = document.getElementById('goal').value;
 
-    // حساب مؤشر كتلة الجسم (BMI)
     const bmi = weight / (height * height);
 
-    // حساب السعرات الحرارية الأساسية (BMR)
     let bmr;
     if (gender === 'male') {
         bmr = 66 + (13.75 * weight) + (5 * height * 100) - (6.75 * age);
@@ -21,77 +18,69 @@ document.getElementById('nutrition-form').addEventListener('submit', function(e)
         bmr = 655 + (9.56 * weight) + (1.85 * height * 100) - (4.68 * age);
     }
 
-    // تعديل السعرات الحرارية حسب مستوى النشاط
     const totalCalories = bmr * activityLevel;
 
-    // تعديل السعرات الحرارية حسب الهدف
     let targetCalories;
     if (goal === 'lose') {
-        targetCalories = totalCalories - 500;  // لتقليل 500 سعرة حرارية
+        targetCalories = totalCalories - 500;  
     } else if (goal === 'gain') {
-        targetCalories = totalCalories + 500;  // لزيادة 500 سعرة حرارية
+        targetCalories = totalCalories + 500; 
     } else {
-        targetCalories = totalCalories;  // الحفاظ على الوزن
+        targetCalories = totalCalories;  
     }
 
-    // حساب النسب المئوية للمغذيات
-    const carbs = (targetCalories * 0.5) / 4;  // 50% من السعرات = كربوهيدرات
-    const proteins = (targetCalories * 0.2) / 4;  // 20% من السعرات = بروتينات
-    const fats = (targetCalories * 0.3) / 9;  // 30% من السعرات = دهون
-    const water = weight * 30;  // 30 مل لكل كيلو
+    const carbs = (targetCalories * 0.5) / 4;  
+    const proteins = (targetCalories * 0.2) / 4;
+    const fats = (targetCalories * 0.3) / 9;  
+    const water = weight * 30; 
 
-    // عرض النتائج
-    document.getElementById('calories').innerText = السعرات الحرارية: ${targetCalories} سعرة حرارية;
-    document.getElementById('water').innerText = كمية الماء: ${water} مل;
-    document.getElementById('carbs').innerText = الكربوهيدرات: ${carbs} جرام;
-    document.getElementById('proteins').innerText = البروتينات: ${proteins} جرام;
-    document.getElementById('fats').innerText = الدهون: ${fats} جرام;
+    document.getElementById('calories').innerText = Daily Calories: ${targetCalories}  calory;
+    document.getElementById('water').innerText = daily Water: ${water} ml;
+    document.getElementById('carbs').innerText = Carbohydrate: ${carbs} g;
+    document.getElementById('proteins').innerText = Proteins: ${proteins} g;
+    document.getElementById('fats').innerText = Fats: ${fats} جرام;
 
-    // تحديد النظام الغذائي
-    let dietPlan = "نظام غذائي متوازن.";
+    let dietPlan = "Balanced Diet.";
     if (goal === 'lose') {
-        dietPlan = "نظام غذائي منخفض السعرات مع تمرين رياضي.";
+        dietPlan = "Low-calorie diet with exercise.";
     } else if (goal === 'gain') {
-        dietPlan = "نظام غذائي عالي البروتين والكربوهيدرات.";
+        dietPlan = "A diet high in protein and carbohydrates.";
     }
 
-    document.getElementById('diet-plan').innerText = النظام الغذائي: ${dietPlan};
+    document.getElementById('diet-plan').innerText = Diet: ${dietPlan};
 
-    // خطة التمرين
-    let exercisePlan = "تمارين خفيفة مثل المشي أو تمارين خفيفة في المنزل.";
+    let exercisePlan = "Light exercises such as walking or light exercises at home.";
     if (goal === 'lose') {
-        exercisePlan = "تمارين كاريدو مثل الجري أو السباحة.";
+        exercisePlan = "Cardio exercises such as running or swimming.";
     } else if (goal === 'gain') {
-        exercisePlan = "تمارين رفع الأثقال لزيادة الكتلة العضلية.";
+        exercisePlan = "Weight lifting exercises to increase muscle mass.";
     }
 
-    document.getElementById('exercise-plan').innerText = خطة التمرين: ${exercisePlan};
+    document.getElementById('exercise-plan').innerText = Plan Excercise: ${exercisePlan};
 
-    // عرض حالة الجسم بناءً على BMI
     let bodyStatus = '';
     let bodyImage = '';
     if (bmi < 18.5) {
-        bodyStatus = 'أنت تعاني من نقص الوزن. حاول زيادة السعرات الحرارية بشكل تدريجي.';
-        bodyImage = 'images/thin.jpg.jpg'; // صورة للنحافة
+        bodyStatus = 'You are underweight. Try to increase calories gradually.';
+        bodyImage = 'images/thin.jpg.jpg';
     } else if (bmi >= 18.5 && bmi < 24.9) {
-        bodyStatus = 'وزنك معتدل. حافظ على نمط الحياة الصحي.';
-        bodyImage = 'images/normal.jpg.jpg'; // صورة للوزن المعتدل
+        bodyStatus = 'Your weight is moderate. Maintain a healthy lifestyle.';
+        bodyImage = 'images/normal.jpg.jpg'; 
     } else {
-        bodyStatus = 'أنت تعاني من زيادة الوزن. حاول تقليل السعرات الحرارية وزيادة النشاط البدني.';
-        bodyImage = 'images/overweight.jpg.jpg'; // صورة للوزن الزائد
+        bodyStatus = 'You are overweight. Try to reduce calories and increase physical activity.';
+        bodyImage = 'images/overweight.jpg.jpg';
     }
 
     document.getElementById('body-img').src = bodyImage;
     document.getElementById('body-status').innerText = bodyStatus;
 
-    // عرض الملاحظات الطبية بناءً على الأمراض
     let medicalNote = '';
     if (disease === 'diabetes') {
-        medicalNote = 'يجب على مرضى السكري تناول وجبات صغيرة ومتوازنة تحتوي على كربوهيدرات بطيئة الامتصاص.';
+        medicalNote = 'Diabetics should eat small, balanced meals that contain slow-absorbing carbohydrates.';
     } else if (disease === 'hypertension') {
-        medicalNote = 'يجب تجنب الأطعمة المالحة واختيار الأطعمة التي تحتوي على بوتاسيوم ودهون صحية.';
+        medicalNote = 'You should avoid salty foods and choose foods that contain potassium and healthy fats.';
     } else if (disease === 'heart') {
-        medicalNote = 'يجب تقليل الدهون المشبعة وزيادة الأطعمة الغنية بالأحماض الدهنية أوميغا 3.';
+        medicalNote = ' You should reduce saturated fats and increase foods rich in omega-3 fatty acids.';
     }
 
     document.getElementById('medical-note').innerText = medicalNote;
