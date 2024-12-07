@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Intelligent Personal Nutrition Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('health.jpg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: rgb(243, 227, 227);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(11, 11, 11, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        input,
+        select {
+            margin: 10px;
+            padding: 12px;
+            width: 85%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: rgb(42, 42, 84);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: blue;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 25px;
+            color: #fbfaed;
+        }
+
+        .result {
+            font-size: 20px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #181717;
+            color: white;
+        }
+
+        label {
+            font-size: 18px;
+            color: #ffeb3b;
+        }
+
+        .image-container {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 180px;
+            margin: 15px;
+            border-radius: 50%;
+        }
+
+        .meal-plan,
+        .exercise-plan {
+            margin-top: 25px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .meal-plan table,
+        .exercise-plan table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="loginPage" class="container">
+        <h1>Welcome to your personal nutrition assistant!</h1>
+        <form id="loginForm">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" placeholder="Enter your username" required><br><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" placeholder="Enter your password" required><br><br>
+            <button type="button" onclick="goToQuestions()">Log in</button>
+        </form>
+    </div>
+
+
+    <div id="questionsPage" class="container" style="display:none;">
+        <h1>Personalized Nutrition Questions</h1>
+        <form id="questionForm">
+            <label for="weight">Weight (Kg)</label>
+            <input type="number" id="weight" required><br>
+            <label for="height">Height (Cm)</label>
+            <input type="number" id="height" required><br>
+            <label for="age">Age (Years)</label>
+            <input type="number" id="age" required><br>
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+                <option value="male">Male</option><option value="female">Female</option>
+            </select><br>
+            <label for="disease">Do you have any health conditions?</label>
+            <select id="disease" required>
+                <option value="none">Nothing</option>
+                <option value="diabetes">Diabetes</option>
+                <option value="heart">Heart disease</option></select><br>
+            <label for="activity">Daily activity level</label>
+            <select id="activity" required>
+                <option value="low">light (0 days a week)</option>
+                <option value="moderate">moderate (3-4 days a week)</option>
+                <option value="high">active (5-6 days a week)</option>
+            </select><br>
+            <label for="goal">Goal</label>
+            <select id="goal" required>
+                <option value="lose">lose weight</option>
+                <option value="gain">gain weight</option>
+                <option value="maintain">maintain weight</option>
+            </select><br><br>
+            <button type="button" onclick="calculateResults()">Calculate</button>
+        </form>
+    </div>
+
+
+    <div id="resultPage" class="container" style="display:none;">
+        <div id="bodyImage" class="image-container"></div> 
+        <div id="resultText" class="result"></div>
+        
+    
+        <div class="meal-plan">
+            <h2>Meal Plan</h2>
+            <table id="mealTable">
+            </table>
+        </div>
+
+        <div class="exercise-plan">
+            <h2>Exercise Plan</h2>
+            <table>
+                <tr><th>Activity</th><th>Frequency</th></tr>
+                <tr><td>Cardio</td><td>3-4 times a week</td></tr>
+                <tr><td>Strength Training</td><td>2-3 times a week</td></tr>
+                <tr><td>Yoga</td><td>2 times a week</td></tr>
+                <tr><td>Rest</td><td>1-2 times a week</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function goToQuestions() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            if (username === "malak" && password === "qwer") {
+                document.getElementById("loginPage").style.display = "none";
+                document.getElementById("questionsPage").style.display = "block";
+            } else {
+                alert("Incorrect username or password");
+            }
+        }
+
+        function calculateResults() {
+            let weight = parseFloat(document.getElementById("weight").value);
+            let height = parseFloat(document.getElementById("height").value);
+            let age = parseInt(document.getElementById("age").value);
+            let gender = document.getElementById("gender").value;
+            let activity = document.getElementById("activity").value;
+            let goal = document.getElementById("goal").value;
+
+            let BMR;
+            if (gender == "male") {
+                BMR = 66 + (13.75 * weight) + (5 * height) - (6.75 * age);
+            } else {
+                BMR = 655 + (9.56 * weight) + (1.85 * height) - (4.68 * age);
+            }
+
+            let activityMultiplier;
+            if (activity == "low") {
+                activityMultiplier = 1.2;
+            } else if (activity == "moderate") {
+                activityMultiplier = 1.55;
+            } else {
+                activityMultiplier = 1.9;
+            }
+
+            let TDEE = BMR * activityMultiplier;
+
+            if (goal == "lose") {
+                TDEE -= 500;
+            } else if (goal == "gain") {
+                TDEE += 500;
+            }let waterIntake = weight * 35; 
+            let carbs = (TDEE * 0.45) / 4; 
+            let protein = (TDEE * 0.3) / 4; 
+            let fats = (TDEE * 0.25) / 9; 
+
+            let bodyType = "normal";
+            if (weight / ((height / 100) ** 2) < 18.5) {
+                bodyType = "underweight";
+            } else if (weight / ((height / 100) ** 2) > 25) {
+                bodyType = "overweight";
+            }
+
+            let heightInMeters = height / 100;
+            let idealWeightMax = 24.9 * (heightInMeters * heightInMeters);
+
+        
+            let resultText = "<h2> Result: </h2>" +
+                "<table>" +
+                "<tr><td> Body type</td><td>" + bodyType + "</td></tr>" +
+                "<tr><td> Ideal weight</td><td>" + idealWeightMax.toFixed(2) + " (kg)</td></tr>" +
+                "<tr><td> Daily calories</td><td>" + TDEE.toFixed(0) + "  (calorie)</td></tr>" +
+                "<tr><td> Daily water</td><td>" + waterIntake + " (ml)</td></tr>" +
+                "<tr><td> Carbohydrates</td><td>" + carbs.toFixed(2) + " (g)</td></tr>" +
+                "<tr><td> Proteins</td><td>" + protein.toFixed(2) + " (g)</td></tr>" +
+                "<tr><td> Fats</td><td>" + fats.toFixed(2) + " (g)</td></tr>" +
+                "</table>";
+
+            document.getElementById("resultText").innerHTML = resultText;
+
+        
+            var mealTableContent = "";
+            if (bodyType === "underweight") {
+                mealTableContent = 
+                    "<tr><th>Meal</th><th>Food Items</th></tr>" +
+                    "<tr><td>Breakfast</td><td>Full-fat Milk, Oats, Eggs, Banana</td></tr>" +
+                    "<tr><td>Lunch</td><td>Chicken, Rice, Avocado, Olive Oil</td></tr>" +
+                    "<tr><td>Dinner</td><td>Steak, Potatoes, Salad with Dressing</td></tr>" +
+                    "<tr><td>Snack</td><td>Peanut Butter, Toast, Yogurt</td></tr>";
+            } else if (bodyType === "normal") {
+                mealTableContent = 
+                    "<tr><th>Meal</th><th>Food Items</th></tr>" +
+                    "<tr><td>Breakfast</td><td>Oatmeal, Fruit, Eggs</td></tr>" +
+                    "<tr><td>Lunch</td><td>Chicken, Rice, Vegetables</td></tr>" +
+                    "<tr><td>Dinner</td><td>Grilled Fish, Quinoa, Salad</td></tr>" +
+                    "<tr><td>Snack</td><td>Greek Yogurt, Almonds</td></tr>";
+            } else if (bodyType === "overweight") {
+                mealTableContent = 
+                    "<tr><th>Meal</th><th>Food Items</th></tr>" +
+                    "<tr><td>Breakfast</td><td>Egg Whites, Spinach, Whole Wheat Toast</td></tr>" +
+                    "<tr><td>Lunch</td><td>Grilled Chicken, Salad, Olive Oil</td></tr>" +
+                    "<tr><td>Dinner</td><td>Fish, Steamed Veggies</td></tr>" +
+                    "<tr><td>Snack</td><td>Carrot Sticks, Hummus</td></tr>";
+            }
+            document.getElementById("mealTable").innerHTML = mealTableContent;
+
+        
+            var bodyImageSrc = "normal.jpg.jpg";
+            if (bodyType === "underweight") {
+                bodyImageSrc = "thin.jpg.jpg";
+            } else if (bodyType === "overweight") {
+                bodyImageSrc = "overweight.jpg.jpg";
+            }
+            document.getElementById("bodyImage").innerHTML = '<img src="' + bodyImageSrc + '" alt="Body Image">';
+
+            document.getElementById("questionsPage").style.display = "none";
+            document.getElementById("resultPage").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
